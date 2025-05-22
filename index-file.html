@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-bs-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بوابة القبول للدبلوم عن بعد - جامعة الملك عبدالعزيز</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Header/Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="index.html">
+                <img src="assets/kau-logo.svg" alt="شعار جامعة الملك عبدالعزيز" width="60" height="60" class="me-2">
+                <span>جامعة الملك عبدالعزيز | بوابة القبول للدبلوم عن بعد</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="index.html">الرئيسية</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="admin/login.html"><i class="fas fa-user-shield me-1"></i> لوحة الإدارة</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="programs.html">البرامج المتاحة</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="new-apply.html">تقديم طلب</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="application-status.html">استعلام عن طلب</a>
+                    </li>
+                </ul>
+                <div class="nav-auth-buttons">
+                    <a href="login.html" class="btn btn-outline-primary me-2"><i class="fas fa-sign-in-alt me-1"></i> تسجيل الدخول</a>
+                    <a href="login.html#register" class="btn btn-primary"><i class="fas fa-user-plus me-1"></i> تسجيل جديد</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero-section py-5 text-center bg-primary text-white">
+        <div class="container">
+            <h1 class="display-4 fw-bold">بوابة القبول للدبلوم عن بعد</h1>
+            <p class="lead">جامعة الملك عبدالعزيز - التعليم عن بعد</p>
+            <a href="apply.html" class="btn btn-light btn-lg mt-3">تقديم طلب الآن</a>
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row text-center">
+                <div class="col-md-4 mb-4">
+                    <div class="feature-card p-4 h-100 border rounded shadow-sm">
+                        <i class="fas fa-graduation-cap fa-3x mb-3 text-primary"></i>
+                        <h3>برامج متنوعة</h3>
+                        <p>تقدم الجامعة مجموعة متنوعة من برامج الدبلوم عن بعد في مختلف التخصصات</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="feature-card p-4 h-100 border rounded shadow-sm">
+                        <i class="fas fa-laptop fa-3x mb-3 text-primary"></i>
+                        <h3>تعليم مرن</h3>
+                        <p>تعلم من أي مكان وفي أي وقت مع الحفاظ على جودة التعليم العالية</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="feature-card p-4 h-100 border rounded shadow-sm">
+                        <i class="fas fa-certificate fa-3x mb-3 text-primary"></i>
+                        <h3>شهادات معتمدة</h3>
+                        <p>احصل على شهادات معتمدة من جامعة الملك عبدالعزيز معترف بها محلياً ودولياً</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Programs Overview -->
+    <section class="bg-light py-5">
+        <div class="container">
+            <h2 class="text-center mb-4">البرامج المتاحة للتقديم</h2>
+            <div class="row" id="featured-programs">
+                <!-- سيتم ملؤها ديناميكياً من خلال JavaScript -->
+                <div class="loading-container text-center py-5">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">جارٍ التحميل...</span>
+                    </div>
+                    <p class="mt-2">جارٍ تحميل البرامج...</p>
+                </div>
+            </div>
+            <div class="text-center mt-4">
+                <a href="programs.html" class="btn btn-outline-primary">عرض جميع البرامج</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Timeline Section -->
+    <section class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-5">مراحل القبول</h2>
+            <div class="row">
+                <div class="col-lg-10 mx-auto">
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-badge bg-primary">1</div>
+                            <div class="timeline-content">
+                                <h4>تقديم الطلب</h4>
+                                <p>تعبئة نموذج طلب القبول وتحميل المستندات المطلوبة</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-badge bg-primary">2</div>
+                            <div class="timeline-content">
+                                <h4>مراجعة الطلب</h4>
+                                <p>مراجعة الطلب من قبل لجنة القبول بالجامعة</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-badge bg-primary">3</div>
+                            <div class="timeline-content">
+                                <h4>إعلان القبول</h4>
+                                <p>إرسال إشعار القبول للمتقدمين المقبولين</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-badge bg-primary">4</div>
+                            <div class="timeline-content">
+                                <h4>استكمال إجراءات التسجيل</h4>
+                                <p>دفع الرسوم واستكمال إجراءات التسجيل النهائية</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="bg-primary text-white py-5 text-center">
+        <div class="container">
+            <h2 class="mb-3">ابدأ رحلتك التعليمية اليوم</h2>
+            <p class="lead mb-4">التقديم متاح حالياً للفصل الدراسي القادم</p>
+            <a href="apply.html" class="btn btn-light btn-lg">تقديم طلب الآن</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <h5>جامعة الملك عبدالعزيز</h5>
+                    <p>برامج الدبلوم عن بعد</p>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <h5>روابط مهمة</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="index.html" class="text-white">الرئيسية</a></li>
+                        <li><a href="programs.html" class="text-white">البرامج المتاحة</a></li>
+                        <li><a href="apply.html" class="text-white">تقديم طلب</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <h5>تواصل معنا</h5>
+                    <p><i class="fas fa-envelope me-2"></i> distance-learning@kau.edu.sa</p>
+                    <p><i class="fas fa-phone me-2"></i> 966-12-xxxxxxx</p>
+                    <div class="social-links mt-3">
+                        <a href="#" class="text-white me-2"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-white me-2"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-white me-2"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-white"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-3 border-top pt-3">
+                <p>© 2025 جامعة الملك عبدالعزيز - جميع الحقوق محفوظة</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- API Connection -->
+    <script src="js/api-connection.js"></script>
+    <!-- Custom JS -->
+    <script src="js/main.js"></script>
+    <!-- Home Page Script -->
+    <script>
+        // عند تحميل الصفحة
+        document.addEventListener('DOMContentLoaded', function() {
+            // تحميل البرامج المميزة
+            loadFeaturedPrograms();
+            
+            // التحقق من حالة تسجيل الدخول
+            checkAuthStatus();
+        });
+
+        /**
+         * تحميل البرامج المميزة
+         */
+        async function loadFeaturedPrograms() {
+            try {
+                // حاوية البرامج
+                const programsContainer = document.getElementById('featured-programs');
+                
+                // في النظام الحقيقي، سنقوم بجلب البيانات من الخادم
+                // const response = await programApi.getAllPrograms();
+                // const allPrograms = response.programs || [];
+                
+                // للتجربة، إنشاء بيانات افتراضية
+                const samplePrograms = await generateSamplePrograms();
+                
+                // تصفية البرامج المميزة فقط
+                const featuredPrograms = samplePrograms.filter(program => program.featured);
+                
+                // اختيار 2-3 برامج
+                const displayPrograms = featuredPrograms.slice(0, 2);
+                
+                // إفراغ الحاوية
+                programsContainer.innerHTML = '';
+                
+                // إضافة البرامج إلى الحاوية
+                displayPrograms.forEach(program => {
+                    // إنشاء بطاقة البرنامج
+                    const programCard = document.createElement('div');
+                    programCard.className = 'col-md-6 mb-4';
+                    
+                    programCard.innerHTML = `
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h3 class="card-title">${program.name}</h3>
+                                <ul class="list-group list-group-flush">
+                                    ${program.description ? `<li class="list-group-item">${program.description}</li>` : ''}
+                                </ul>
+                                <a href="programs.html#${program.category}" class="btn btn-primary mt-3">عرض التفاصيل</a>
+                            </div>
+                        </div>
+                    `;
+                    
+                    programsContainer.appendChild(programCard);
+                });
+                
+            } catch (error) {
+                console.error('خطأ في تحميل البرامج المميزة:', error);
+                
+                // عرض رسالة خطأ
+                const programsContainer = document.getElementById('featured-programs');
+                programsContainer.innerHTML = `
+                    <div class="col-12">
+                        <div class="alert alert-danger">
+                            <i class="fas fa-exclamation-circle me-2"></i>
+                            حدث خطأ أثناء تحميل البرامج. يرجى المحاولة مرة أخرى لاحقاً.
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        /**
+         * إنشاء بيانات افتراضية للبرامج
+         */
+        async function generateSamplePrograms() {
+            // تأخير اصطناعي لمحاكاة تحميل البيانات
+            await new Promise(resolve => setTimeout(resolve, 500));
+            
+            return [
+                {
+                    id: 'BUS-001',
+                    name: 'دبلوم إدارة الأعمال',
+                    category: 'business',
+                    description: 'يهدف البرنامج إلى تزويد الطلاب بالمهارات الأساسية في مجال إدارة الأعمال.',
+                    featured: true
+                },
+                {
+                    id: 'IT-003',
+                    name: 'دبلوم أمن المعلومات',
+                    category: 'it',
+                    description: 'يهدف البرنامج إلى تطوير مهارات الطلاب في مجال أمن المعلومات وحماية البيانات.',
+                    featured: true
+                },
+                {
+                    id: 'IT-001',
+                    name: 'دبلوم علوم الحاسب',
+                    category: 'it',
+                    description: 'يهدف البرنامج إلى تزويد الطلاب بالمعرفة الأساسية في مجال علوم الحاسب.',
+                    featured: true
+                }
+            ];
+        }
+
+        /**
+         * التحقق من حالة تسجيل الدخول
+         */
+        async function checkAuthStatus() {
+            try {
+                // في النظام الحقيقي، سنتحقق من حالة تسجيل الدخول من الخادم
+                // const isAuthenticated = await authApi.checkAuthStatus();
+                
+                // للتجربة، نستخدم sessionStorage
+                const isAuthenticated = !!sessionStorage.getItem('studentId');
+                
+                // تحديث واجهة المستخدم
+                updateAuthUI(isAuthenticated);
+                
+            } catch (error) {
+                console.error('خطأ في التحقق من حالة تسجيل الدخول:', error);
+                
+                // نفترض أن المستخدم غير مسجل الدخول
+                updateAuthUI(false);
+            }
+        }
+
+        /**
+         * تحديث واجهة المستخدم حسب حالة تسجيل الدخول
+         */
+        function updateAuthUI(isAuthenticated) {
+            const authButtonsContainer = document.querySelector('.nav-auth-buttons');
+            
+            if (isAuthenticated) {
+                // الحصول على بيانات المستخدم
+                const userDataStr = sessionStorage.getItem('userData');
+                let userData = null;
+                
+                if (userDataStr) {
+                    userData = JSON.parse(userDataStr);
+                }
+                
+                // إنشاء قائمة المستخدم
+                authButtonsContainer.innerHTML = `
+                    <div class="dropdown">
+                        <button class="btn btn-outline-primary dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-user-circle me-1"></i>
+                            ${userData?.firstName || 'مرحباً بك'}
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                            <li><a class="dropdown-item" href="applications.html"><i class="fas fa-file-alt me-2"></i> طلباتي</a></li>
+                            <li><a class="dropdown-item" href="student-dashboard.html"><i class="fas fa-tachometer-alt me-2"></i> لوحة التحكم</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#" id="logout-btn"><i class="fas fa-sign-out-alt me-2"></i> تسجيل الخروج</a></li>
+                        </ul>
+                    </div>
+                `;
+                
+                // إضافة مستمع حدث لزر تسجيل الخروج
+                document.getElementById('logout-btn').addEventListener('click', function(e) {
+                    e.preventDefault();
+                    logoutUser();
+                });
+                
+            } else {
+                // إنشاء أزرار تسجيل الدخول والتسجيل
+                authButtonsContainer.innerHTML = `
+                    <a href="login.html" class="btn btn-outline-primary me-2"><i class="fas fa-sign-in-alt me-1"></i> تسجيل الدخول</a>
+                    <a href="login.html#register" class="btn btn-primary"><i class="fas fa-user-plus me-1"></i> تسجيل جديد</a>
+                `;
+            }
+        }
+
+        /**
+         * تسجيل الخروج
+         */
+        function logoutUser() {
+            // في النظام الحقيقي، سنقوم بتسجيل الخروج من الخادم
+            // await authApi.logout();
+            
+            // مسح بيانات الجلسة
+            sessionStorage.removeItem('studentId');
+            sessionStorage.removeItem('userData');
+            sessionStorage.removeItem('applicationData');
+            
+            // تحديث واجهة المستخدم
+            updateAuthUI(false);
+            
+            // إعادة تحميل الصفحة
+            window.location.reload();
+        }
+    </script>
+</body>
+</html>

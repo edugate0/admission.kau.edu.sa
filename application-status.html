@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-bs-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>استعلام عن حالة طلب - جامعة الملك عبدالعزيز</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Header/Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="index.html">
+                <img src="assets/kau-logo.svg" alt="شعار جامعة الملك عبدالعزيز" width="60" height="60" class="me-2">
+                <span>جامعة الملك عبدالعزيز | بوابة القبول للدبلوم عن بعد</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">الرئيسية</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="programs.html">البرامج المتاحة</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="login.html?redirect=apply.html">تقديم طلب</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="application-status.html">استعلام عن طلب</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <div class="bg-primary text-white py-4">
+        <div class="container">
+            <h1 class="display-5 fw-bold">استعلام عن حالة طلب</h1>
+            <p class="lead">يمكنك متابعة حالة طلبك من خلال إدخال رقم الطلب ورقم الهوية الوطنية</p>
+        </div>
+    </div>
+
+    <!-- Status Check Section -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="card shadow-sm border-0">
+                        <div class="card-body p-4">
+                            <h3 class="card-title mb-4 text-center">استعلام عن حالة طلب القبول</h3>
+                            
+                            <form id="applicationStatusForm" class="needs-validation" novalidate>
+                                <div class="mb-3">
+                                    <label for="applicationId" class="form-label required-field">رقم الطلب</label>
+                                    <input type="text" class="form-control" id="applicationId" name="applicationId" placeholder="مثال: KAU-20250501-1234" required>
+                                    <div class="invalid-feedback">
+                                        الرجاء إدخال رقم الطلب
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="nationalId" class="form-label required-field">رقم الهوية الوطنية</label>
+                                    <input type="text" class="form-control national-id" id="nationalId" name="nationalId" required>
+                                    <div class="invalid-feedback">
+                                        الرجاء إدخال رقم الهوية بصيغة صحيحة (10 أرقام)
+                                    </div>
+                                </div>
+                                
+                                <div class="d-grid gap-2">
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fas fa-search me-2"></i> استعلام
+                                    </button>
+                                </div>
+                            </form>
+                            
+                            <div id="statusResult" class="mt-4 d-none">
+                                <!-- Results will be displayed here -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center mt-4">
+                        <p>إذا كنت تواجه مشكلة في الاستعلام عن حالة طلبك، يرجى التواصل مع قسم القبول والتسجيل:</p>
+                        <p><i class="fas fa-envelope me-2"></i> distance-admission@kau.edu.sa</p>
+                        <p><i class="fas fa-phone me-2"></i> 966-12-xxxxxxx</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Application Details Modal -->
+    <div class="modal fade" id="applicationDetailsModal" tabindex="-1" aria-labelledby="applicationDetailsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="applicationDetailsModalLabel">تفاصيل الطلب</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="applicationDetailsContent">
+                    <!-- Application details will be populated here -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إغلاق</button>
+                    <button type="button" class="btn btn-primary" id="printApplicationBtn">
+                        <i class="fas fa-print me-1"></i> طباعة
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FAQ Section -->
+    <section class="bg-light py-5">
+        <div class="container">
+            <h2 class="text-center mb-4">أسئلة شائعة حول عملية القبول</h2>
+            
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <div class="accordion" id="statusFAQ">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingOne">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    كم تستغرق عملية مراجعة الطلب؟
+                                </button>
+                            </h2>
+                            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#statusFAQ">
+                                <div class="accordion-body">
+                                    تستغرق عملية مراجعة الطلب عادةً من 3 إلى 5 أيام عمل من تاريخ تقديم الطلب. قد تستغرق فترة أطول خلال فترات الضغط في بداية التسجيل.
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingTwo">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                    ماذا تعني حالة "قيد المراجعة"؟
+                                </button>
+                            </h2>
+                            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#statusFAQ">
+                                <div class="accordion-body">
+                                    تعني حالة "قيد المراجعة" أن طلبك في مرحلة التدقيق والمراجعة من قبل لجنة القبول. يتم في هذه المرحلة التحقق من استيفاء الشروط والمستندات المطلوبة.
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingThree">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                    ماذا أفعل إذا تم رفض طلبي؟
+                                </button>
+                            </h2>
+                            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#statusFAQ">
+                                <div class="accordion-body">
+                                    في حال رفض الطلب، سيتم توضيح سبب الرفض عند الاستعلام عن حالة الطلب. يمكنك التقدم بطلب جديد بعد معالجة أسباب الرفض، أو يمكنك التواصل مع قسم القبول للاستفسار عن إمكانية إعادة النظر في الطلب.
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingFour">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                    ماذا بعد قبول الطلب؟
+                                </button>
+                            </h2>
+                            <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#statusFAQ">
+                                <div class="accordion-body">
+                                    بعد قبول طلبك، ستتمكن من الوصول إلى البوابة الأكاديمية والاطلاع على المقررات والجدول الدراسي. يجب عليك سداد الرسوم الدراسية خلال الفترة المحددة لتأكيد القبول.
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingFive">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                                    هل يمكنني تعديل بياناتي بعد تقديم الطلب؟
+                                </button>
+                            </h2>
+                            <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive" data-bs-parent="#statusFAQ">
+                                <div class="accordion-body">
+                                    لا يمكن تعديل البيانات بعد تقديم الطلب. في حال الحاجة لتعديل بيانات مهمة، يرجى التواصل مع قسم القبول والتسجيل عبر البريد الإلكتروني مع ذكر رقم الطلب ورقم الهوية.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <h5>جامعة الملك عبدالعزيز</h5>
+                    <p>برامج الدبلوم عن بعد</p>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <h5>روابط مهمة</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="index.html" class="text-white">الرئيسية</a></li>
+                        <li><a href="programs.html" class="text-white">البرامج المتاحة</a></li>
+                        <li><a href="apply.html" class="text-white">تقديم طلب</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <h5>تواصل معنا</h5>
+                    <p><i class="fas fa-envelope me-2"></i> distance-learning@kau.edu.sa</p>
+                    <p><i class="fas fa-phone me-2"></i> 966-12-xxxxxxx</p>
+                    <div class="social-links mt-3">
+                        <a href="#" class="text-white me-2"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-white me-2"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-white me-2"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-white"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-3 border-top pt-3">
+                <p>© <span class="copyright-year">2023</span> جامعة الملك عبدالعزيز - جميع الحقوق محفوظة</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="js/storage.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/form-validation.js"></script>
+    <script src="js/application-status.js"></script>
+</body>
+</html>

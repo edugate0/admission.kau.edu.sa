@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-bs-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة تحكم الطالب - جامعة الملك عبدالعزيز</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .nav-pills .nav-link.active {
+            background-color: #08294E;
+        }
+        .status-card {
+            border-right: 5px solid;
+        }
+        .status-pending {
+            border-color: #fd7e14;
+        }
+        .status-approved {
+            border-color: #198754;
+        }
+        .status-rejected {
+            border-color: #dc3545;
+        }
+        .status-paid {
+            border-color: #0dcaf0;
+        }
+        .banner-section {
+            background-color: #08294E;
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .payment-card {
+            transition: transform 0.3s;
+        }
+        .payment-card:hover {
+            transform: translateY(-5px);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header/Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="index.html">
+                <img src="assets/kau-logo.svg" alt="شعار جامعة الملك عبدالعزيز" width="60" height="60" class="me-2">
+                <span>جامعة الملك عبدالعزيز | بوابة القبول للدبلوم عن بعد</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">الرئيسية</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="programs.html">البرامج المتاحة</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="new-apply.html">تقديم طلب</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="application-status.html">استعلام عن طلب</a>
+                    </li>
+                </ul>
+                <div class="d-flex">
+                    <button id="logout-btn" class="btn btn-outline-danger">
+                        <i class="fas fa-sign-out-alt me-1"></i> تسجيل الخروج
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Dashboard Content -->
+    <div class="container py-5">
+        <div class="row">
+            <!-- Student Info Card -->
+            <div class="col-lg-4 mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0"><i class="fas fa-user-graduate me-2"></i> بيانات الطالب</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="text-center mb-3">
+                            <img id="user-avatar" src="https://via.placeholder.com/150" alt="صورة الطالب" class="rounded-circle" width="100" height="100">
+                        </div>
+                        <div class="mt-3">
+                            <h5 id="user-fullname" class="text-center mb-3">اسم الطالب</h5>
+                            <p class="mb-2"><strong><i class="fas fa-id-card me-2"></i> رقم الهوية:</strong> <span id="user-id">-</span></p>
+                            <p class="mb-2"><strong><i class="fas fa-envelope me-2"></i> البريد الإلكتروني:</strong> <span id="user-email">-</span></p>
+                            <p class="mb-2"><strong><i class="fas fa-phone me-2"></i> رقم الجوال:</strong> <span id="user-phone">-</span></p>
+                            <p class="mb-0"><strong><i class="fas fa-graduation-cap me-2"></i> البرنامج:</strong> <span id="user-program">-</span></p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Dashboard Navigation -->
+                <div class="card mt-4 shadow-sm">
+                    <div class="card-header bg-light">
+                        <h5 class="mb-0">لوحة التحكم</h5>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="nav nav-pills d-flex flex-column">
+                            <button class="nav-link rounded-0 active p-3 text-start" id="dashboard-tab" data-bs-toggle="pill" data-bs-target="#dashboard" type="button">
+                                <i class="fas fa-tachometer-alt me-2"></i> الملخص
+                            </button>
+                            <button class="nav-link rounded-0 p-3 text-start" id="application-tab" data-bs-toggle="pill" data-bs-target="#application" type="button">
+                                <i class="fas fa-file-alt me-2"></i> طلب القبول
+                            </button>
+                            <button class="nav-link rounded-0 p-3 text-start" id="payment-tab" data-bs-toggle="pill" data-bs-target="#payment" type="button">
+                                <i class="fas fa-credit-card me-2"></i> سداد الرسوم
+                            </button>
+                            <button class="nav-link rounded-0 p-3 text-start" id="academic-tab" data-bs-toggle="pill" data-bs-target="#academic" type="button">
+                                <i class="fas fa-university me-2"></i> النظام الأكاديمي
+                            </button>
+                            <button class="nav-link rounded-0 p-3 text-start" id="support-tab" data-bs-toggle="pill" data-bs-target="#support" type="button">
+                                <i class="fas fa-headset me-2"></i> الدعم الفني
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Main Content Area -->
+            <div class="col-lg-8">
+                <div class="tab-content">
+                    <!-- Dashboard Tab -->
+                    <div class="tab-pane fade show active" id="dashboard">
+                        <!-- Welcome Banner -->
+                        <div class="banner-section mb-4">
+                            <h4 class="mb-2"><i class="fas fa-bell me-2"></i> مرحباً بك <span id="banner-name">طالبنا العزيز</span></h4>
+                            <p class="mb-0">في البوابة الإلكترونية للدبلومات عن بعد بجامعة الملك عبدالعزيز</p>
+                        </div>
+                        
+                        <!-- Application Status -->
+                        <div class="card mb-4 shadow-sm status-card status-pending" id="status-card">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h5 class="mb-1">حالة الطلب</h5>
+                                        <p class="mb-0" id="status-message">جاري مراجعة طلبك...</p>
+                                    </div>
+                                    <span class="badge bg-warning fs-6 p-2" id="status-badge">قيد المراجعة</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Quick Actions -->
+                        <div class="card mb-4 shadow-sm">
+                            <div class="card-header bg-light">
+                                <h5 class="mb-0">إجراءات سريعة</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <a href="#payment" class="btn btn-outline-primary w-100 py-3" id="quick-payment-btn" onclick="switchToTab('payment-tab')">
+                                            <i class="fas fa-credit-card fs-4 d-block mb-2"></i>
+                                            سداد الرسوم
+                                        </a>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <a href="#application" class="btn btn-outline-secondary w-100 py-3" onclick="switchToTab('application-tab')">
+                                            <i class="fas fa-file-alt fs-4 d-block mb-2"></i>
+                                            تفاصيل الطلب
+                                        </a>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <a href="#academic" class="btn btn-outline-success w-100 py-3" id="quick-academic-btn" onclick="switchToTab('academic-tab')">
+                                            <i class="fas fa-university fs-4 d-block mb-2"></i>
+                                            النظام الأكاديمي
+                                        </a>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <a href="#support" class="btn btn-outline-info w-100 py-3" onclick="switchToTab('support-tab')">
+                                            <i class="fas fa-headset fs-4 d-block mb-2"></i>
+                                            الدعم الفني
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Important Notices -->
+                        <div class="card shadow-sm">
+                            <div class="card-header bg-light">
+                                <h5 class="mb-0">إشعارات هامة</h5>
+                            </div>
+                            <div class="card-body p-0">
+                                <ul class="list-group list-group-flush" id="notices-list">
+                                    <!-- Notices will be populated by JavaScript -->
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Application Tab -->
+                    <div class="tab-pane fade" id="application">
+                        <div class="card shadow-sm">
+                            <div class="card-header bg-light">
+                                <h5 class="mb-0">تفاصيل طلب القبول</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="alert alert-primary">
+                                    <div class="d-flex">
+                                        <div class="me-3">
+                                            <i class="fas fa-info-circle fs-3"></i>
+                                        </div>
+                                        <div>
+                                            <h5 class="alert-heading">رقم الطلب: <span id="application-id">-</span></h5>
+                                            <p class="mb-0">تاريخ التقديم: <span id="application-date">-</span></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="row mt-4">
+                                    <div class="col-md-6 mb-3">
+                                        <h6>البرنامج المختار</h6>
+                                        <p id="application-program">-</p>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <h6>التخصص</h6>
+                                        <p id="application-specialization">-</p>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <h6>المؤهل العلمي</h6>
+                                        <p id="application-education">-</p>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <h6>المعدل التراكمي</h6>
+                                        <p id="application-gpa">-</p>
+                                    </div>
+                                </div>
+                                
+                                <hr>
+                                
+                                <h6 class="mt-3">المستندات المرفقة</h6>
+                                <ul class="list-group mt-2" id="documents-list">
+                                    <!-- Documents list will be populated by JavaScript -->
+                                </ul>
+                                
+                                <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                                    <button type="button" class="btn btn-outline-secondary">
+                                        <i class="fas fa-print me-1"></i> طباعة
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Payment Tab -->
+                    <div class="tab-pane fade" id="payment">
+                        <div class="card shadow-sm mb-4">
+                            <div class="card-header bg-light">
+                                <h5 class="mb-0">سداد الرسوم الدراسية</h5>
+                            </div>
+                            <div class="card-body">
+                                <div id="payment-not-required" class="d-none">
+                                    <div class="alert alert-warning">
+                                        <h5 class="alert-heading"><i class="fas fa-exclamation-triangle me-2"></i> لا يمكن إجراء السداد حالياً</h5>
+                                        <p class="mb-0">يرجى الانتظار حتى يتم قبول طلب التقديم ليتم تفعيل خدمة السداد.</p>
+                                    </div>
+                                </div>
+                                
+                                <div id="payment-required" class="d-none">
+                                    <div class="alert alert-success mb-4">
+                                        <h5 class="alert-heading"><i class="fas fa-check-circle me-2"></i> تم قبول طلبك!</h5>
+                                        <p class="mb-0">يرجى سداد الرسوم الدراسية المستحقة لاستكمال إجراءات التسجيل.</p>
+                                    </div>
+                                    
+                                    <div class="row mb-4">
+                                        <div class="col-md-12">
+                                            <div class="card bg-light">
+                                                <div class="card-body">
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <div>
+                                                            <h6 class="mb-2">إجمالي المبلغ المستحق</h6>
+                                                            <h3 class="mb-0 text-primary">12,500 ريال سعودي</h3>
+                                                        </div>
+                                                        <div>
+                                                            <span class="badge bg-danger p-2">تاريخ الاستحقاق: 15/06/2025</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <h6 class="mb-3">اختر طريقة الدفع</h6>
+                                    <div class="row g-3">
+                                        <div class="col-md-4">
+                                            <div class="card payment-card h-100">
+                                                <div class="card-body text-center p-4">
+                                                    <img src="https://saudi-exams.com/wp-content/uploads/2022/08/unnamed-1.png" alt="مدى" class="mb-3" width="50">
+                                                    <h6>بطاقة مدى</h6>
+                                                    <button class="btn btn-sm btn-primary mt-2" data-method="mada">اختيار</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="card payment-card h-100">
+                                                <div class="card-body text-center p-4">
+                                                    <img src="https://cdn-icons-png.flaticon.com/512/196/196578.png" alt="فيزا/ماستركارد" class="mb-3" width="50">
+                                                    <h6>فيزا/ماستركارد</h6>
+                                                    <button class="btn btn-sm btn-primary mt-2" data-method="credit-card">اختيار</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="card payment-card h-100">
+                                                <div class="card-body text-center p-4">
+                                                    <img src="https://sadad.com/Content/Documents/SADAD_Logo_with_TM_Color_EN.png" alt="سداد" class="mb-3" width="50">
+                                                    <h6>نظام سداد</h6>
+                                                    <button class="btn btn-sm btn-primary mt-2" data-method="sadad">اختيار</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Credit Card Payment Container -->
+                                    <div id="credit-card-container" style="display: none;" class="mt-4">
+                                        <div class="card">
+                                            <div class="card-header bg-light">
+                                                <h6 class="mb-0">الدفع باستخدام بطاقة الائتمان</h6>
+                                            </div>
+                                            <div class="card-body">
+                                                <div id="payment-error" class="alert alert-danger mb-3" style="display: none;"></div>
+                                                
+                                                <form id="saudi-payment-form">
+                                                    <div class="row mb-3">
+                                                        <div class="col-md-12">
+                                                            <label for="card-number" class="form-label">رقم البطاقة</label>
+                                                            <input type="text" class="form-control" id="card-number" placeholder="XXXX XXXX XXXX XXXX" maxlength="19" required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mb-3">
+                                                        <div class="col-md-12">
+                                                            <label for="card-holder" class="form-label">اسم حامل البطاقة</label>
+                                                            <input type="text" class="form-control" id="card-holder" placeholder="كما هو مكتوب على البطاقة" required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mb-3">
+                                                        <div class="col-md-6">
+                                                            <label for="expiry-date" class="form-label">تاريخ الانتهاء</label>
+                                                            <input type="text" class="form-control" id="expiry-date" placeholder="MM/YY" maxlength="5" required>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <label for="cvv" class="form-label">رمز الأمان (CVV)</label>
+                                                            <input type="text" class="form-control" id="cvv" placeholder="XXX" maxlength="3" required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-text mb-3">
+                                                        جميع المعاملات آمنة ومشفرة. لا يتم حفظ بيانات البطاقة.
+                                                    </div>
+                                                    <button id="payment-submit" type="submit" class="btn btn-primary">
+                                                        إتمام الدفع
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Mada Payment Container -->
+                                    <div id="mada-payment-container" style="display: none;" class="mt-4">
+                                        <div class="alert alert-info">
+                                            سيتم تحويلك إلى بوابة الدفع الخاصة ببطاقات مدى...
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Sadad Payment Container -->
+                                    <div id="sadad-payment-container" style="display: none;" class="mt-4">
+                                        <div class="alert alert-info">
+                                            سيتم إنشاء فاتورة سداد وإرسالها إليك...
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div id="payment-completed" class="d-none">
+                                    <div class="alert alert-success text-center">
+                                        <i class="fas fa-check-circle fa-3x mb-3"></i>
+                                        <h5 class="alert-heading">تم السداد بنجاح!</h5>
+                                        <p>تم سداد الرسوم الدراسية بنجاح. يمكنك الآن الدخول إلى النظام الأكاديمي.</p>
+                                        <hr>
+                                        <div class="mt-3">
+                                            <a href="#academic" class="btn btn-success" onclick="switchToTab('academic-tab')">
+                                                <i class="fas fa-university me-1"></i> الذهاب إلى النظام الأكاديمي
+                                            </a>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="card mt-4">
+                                        <div class="card-header bg-light">
+                                            <h6 class="mb-0">تفاصيل العملية</h6>
+                                        </div>
+                                        <div class="card-body">
+                                            <table class="table table-striped">
+                                                <tbody>
+                                                    <tr>
+                                                        <th>رقم العملية:</th>
+                                                        <td id="payment-id">PAY-23058741</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>تاريخ السداد:</th>
+                                                        <td id="payment-date">15/05/2025</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>المبلغ المدفوع:</th>
+                                                        <td>12,500 ريال سعودي</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>طريقة الدفع:</th>
+                                                        <td id="payment-method">بطاقة مدى</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-3">
+                                                <button class="btn btn-outline-primary">
+                                                    <i class="fas fa-download me-1"></i> تحميل الإيصال
+                                                </button>
+                                                <button class="btn btn-outline-secondary">
+                                                    <i class="fas fa-print me-1"></i> طباعة
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Academic System Tab -->
+                    <div class="tab-pane fade" id="academic">
+                        <div class="card shadow-sm mb-4">
+                            <div class="card-header bg-light">
+                                <h5 class="mb-0">النظام الأكاديمي (البانر)</h5>
+                            </div>
+                            <div class="card-body">
+                                <div id="banner-not-available" class="d-none">
+                                    <div class="alert alert-warning">
+                                        <h5 class="alert-heading"><i class="fas fa-exclamation-triangle me-2"></i> النظام الأكاديمي غير متاح حالياً</h5>
+                                        <p class="mb-0">يرجى إكمال إجراءات القبول وسداد الرسوم الدراسية للوصول إلى النظام الأكاديمي.</p>
+                                    </div>
+                                </div>
+                                
+                                <div id="banner-available" class="d-none">
+                                    <div class="alert alert-info mb-4">
+                                        <div class="d-flex">
+                                            <div class="me-3">
+                                                <i class="fas fa-university fs-3"></i>
+                                            </div>
+                                            <div>
+                                                <h5 class="alert-heading">مرحباً بك في النظام الأكاديمي</h5>
+                                                <p class="mb-0">يمكنك الآن الوصول إلى النظام الأكاديمي والاستفادة من جميع الخدمات المتاحة.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row g-3 mb-4">
+                                        <div class="col-md-6">
+                                            <a href="#" class="btn btn-outline-primary w-100 p-4 text-start">
+                                                <i class="fas fa-book me-2"></i> تسجيل المقررات
+                                            </a>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <a href="#" class="btn btn-outline-primary w-100 p-4 text-start">
+                                                <i class="fas fa-calendar-alt me-2"></i> الجدول الدراسي
+                                            </a>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <a href="#" class="btn btn-outline-primary w-100 p-4 text-start">
+                                                <i class="fas fa-clipboard-list me-2"></i> السجل الأكاديمي
+                                            </a>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <a href="#" class="btn btn-outline-primary w-100 p-4 text-start">
+                                                <i class="fas fa-chalkboard-teacher me-2"></i> المقررات الحالية
+                                            </a>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="alert alert-warning">
+                                        <p class="mb-0">
+                                            <i class="fas fa-info-circle me-2"></i>
+                                            للمساعدة في استخدام النظام الأكاديمي، يرجى التواصل مع قسم شؤون الطلاب عبر البريد الإلكتروني: academic-support@kau.edu.sa
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Support Tab -->
+                    <div class="tab-pane fade" id="support">
+                        <div class="card shadow-sm">
+                            <div class="card-header bg-light">
+                                <h5 class="mb-0">الدعم الفني</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="alert alert-info mb-4">
+                                    <p class="mb-0">
+                                        <i class="fas fa-info-circle me-2"></i>
+                                        يمكنك التواصل مع فريق الدعم الفني عبر أحد القنوات التالية:
+                                    </p>
+                                </div>
+                                
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <div class="card h-100">
+                                            <div class="card-body">
+                                                <h5 class="card-title"><i class="fas fa-headset me-2"></i> مركز الاتصال</h5>
+                                                <p class="card-text">للاستفسارات العامة والمساعدة في استخدام النظام.</p>
+                                                <p><strong>رقم الهاتف:</strong> 966-12-xxxxxxx</p>
+                                                <p><strong>ساعات العمل:</strong> 8 صباحاً - 4 مساءً</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="card h-100">
+                                            <div class="card-body">
+                                                <h5 class="card-title"><i class="fas fa-envelope me-2"></i> البريد الإلكتروني</h5>
+                                                <p class="card-text">أرسل استفسارك عبر البريد الإلكتروني وسيتم الرد خلال 24 ساعة.</p>
+                                                <p><strong>البريد الإلكتروني:</strong> distance-support@kau.edu.sa</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <h5 class="card-title"><i class="fas fa-ticket-alt me-2"></i> تذكرة دعم فني</h5>
+                                                <p class="card-text">إنشاء تذكرة دعم فني جديدة:</p>
+                                                <form>
+                                                    <div class="mb-3">
+                                                        <label for="supportCategory" class="form-label">نوع المشكلة</label>
+                                                        <select class="form-select" id="supportCategory" required>
+                                                            <option value="" selected disabled>اختر نوع المشكلة</option>
+                                                            <option value="technical">مشكلة تقنية</option>
+                                                            <option value="academic">مشكلة أكاديمية</option>
+                                                            <option value="payment">مشكلة في السداد</option>
+                                                            <option value="other">أخرى</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="supportSubject" class="form-label">عنوان المشكلة</label>
+                                                        <input type="text" class="form-control" id="supportSubject" required>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="supportDescription" class="form-label">وصف المشكلة</label>
+                                                        <textarea class="form-control" id="supportDescription" rows="4" required></textarea>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="supportAttachment" class="form-label">إرفاق ملف (اختياري)</label>
+                                                        <input type="file" class="form-control" id="supportAttachment">
+                                                    </div>
+                                                    <div class="d-grid">
+                                                        <button type="submit" class="btn btn-primary">إرسال</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <h5>جامعة الملك عبدالعزيز</h5>
+                    <p>برامج الدبلوم عن بعد</p>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <h5>روابط مهمة</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="index.html" class="text-white">الرئيسية</a></li>
+                        <li><a href="programs.html" class="text-white">البرامج المتاحة</a></li>
+                        <li><a href="new-apply.html" class="text-white">تقديم طلب</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <h5>تواصل معنا</h5>
+                    <p><i class="fas fa-envelope me-2"></i> distance-learning@kau.edu.sa</p>
+                    <p><i class="fas fa-phone me-2"></i> 966-12-xxxxxxx</p>
+                    <div class="social-links mt-3">
+                        <a href="#" class="text-white me-2"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-white me-2"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-white me-2"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-white"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-3 border-top pt-3">
+                <p>© <span class="copyright-year">2023</span> جامعة الملك عبدالعزيز - جميع الحقوق محفوظة</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Stripe JS -->
+    <script src="https://js.stripe.com/v3/"></script>
+    <!-- Custom JS -->
+    <script src="js/main.js"></script>
+    <script src="js/stripe-payment.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/student-dashboard.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // التحقق من تسجيل الدخول
+            const currentUser = localStorage.getItem('currentUser') ? JSON.parse(localStorage.getItem('currentUser')) : null;
+            if (!currentUser) {
+                // إذا لم يكن المستخدم مسجل دخوله، توجيهه إلى صفحة تسجيل الدخول
+                window.location.href = 'login.html?redirect=student-dashboard.html';
+                return;
+            }
+            
+            // تحميل بيانات المستخدم
+            loadUserData(currentUser);
+            
+            // تحميل بيانات الطلب
+            loadApplicationData(currentUser.nationalId);
+            
+            // تهيئة قائمة الإشعارات
+            initializeNotices();
+            
+            // إضافة المستمعين للأزرار
+            initializeEventListeners();
+        });
+        
+        // تحميل بيانات المستخدم
+        function loadUserData(user) {
+            document.getElementById('user-fullname').textContent = user.firstName + ' ' + user.lastName;
+            document.getElementById('banner-name').textContent = user.firstName;
+            document.getElementById('user-id').textContent = user.nationalId;
+            document.getElementById('user-email').textContent = user.email;
+            document.getElementById('user-phone').textContent = user.phone || '-';
+        }
+        
+        // تحميل بيانات الطلب
+        function loadApplicationData(nationalId) {
+            const applications = getApplications();
+            const application = applications.find(app => app.nationalId === nationalId);
+            
+            if (application) {
+                // تحديث بيانات البرنامج
+                document.getElementById('user-program').textContent = application.program;
+                
+                // تحديث بيانات الطلب
+                document.getElementById('application-id').textContent = application.applicationId;
+                document.getElementById('application-date').textContent = new Date(application.applicationDate).toLocaleDateString('ar-SA');
+                document.getElementById('application-program').textContent = application.program;
+                document.getElementById('application-specialization').textContent = application.specialization || '-';
+                document.getElementById('application-education').textContent = application.educationLevel;
+                document.getElementById('application-gpa').textContent = application.gpa + ' ' + application.gpaType;
+                
+                // تحديث حالة الطلب
+                updateApplicationStatus(application.status);
+                
+                // تحديث حالة السداد
+                updatePaymentStatus(application.status, application.isPaid);
+                
+                // تحديث البانر الأكاديمي
+                updateAcademicBanner(application.status, application.isPaid);
+                
+                // تحديث قائمة المستندات
+                updateDocumentsList(application);
+            }
+        }
+        
+        // تحديث حالة الطلب
+        function updateApplicationStatus(status) {
+            const statusCard = document.getElementById('status-card');
+            const statusBadge = document.getElementById('status-badge');
+            const statusMessage = document.getElementById('status-message');
+            
+            // إزالة الفئات السابقة
+            statusCard.classList.remove('status-pending', 'status-approved', 'status-rejected', 'status-paid');
+            
+            switch(status) {
+                case 'pending':
+                    statusCard.classList.add('status-pending');
+                    statusBadge.className = 'badge bg-warning fs-6 p-2';
+                    statusBadge.textContent = 'قيد المراجعة';
+                    statusMessage.textContent = 'جاري مراجعة طلبك، سيتم إشعارك فور الانتهاء من المراجعة.';
+                    break;
+                case 'approved':
+                    statusCard.classList.add('status-approved');
+                    statusBadge.className = 'badge bg-success fs-6 p-2';
+                    statusBadge.textContent = 'مقبول';
+                    statusMessage.textContent = 'تم قبول طلبك! يرجى سداد الرسوم الدراسية لاستكمال إجراءات التسجيل.';
+                    break;
+                case 'rejected':
+                    statusCard.classList.add('status-rejected');
+                    statusBadge.className = 'badge bg-danger fs-6 p-2';
+                    statusBadge.textContent = 'مرفوض';
+                    statusMessage.textContent = 'نأسف، تم رفض طلبك. يمكنك التواصل مع الدعم الفني لمزيد من المعلومات.';
+                    break;
+                case 'paid':
+                    statusCard.classList.add('status-paid');
+                    statusBadge.className = 'badge bg-info fs-6 p-2';
+                    statusBadge.textContent = 'مسجل';
+                    statusMessage.textContent = 'تم تسجيلك بنجاح! يمكنك الآن الوصول إلى النظام الأكاديمي والبدء في الدراسة.';
+                    break;
+            }
+        }
+        
+        // تحديث حالة السداد
+        function updatePaymentStatus(status, isPaid) {
+            const paymentNotRequired = document.getElementById('payment-not-required');
+            const paymentRequired = document.getElementById('payment-required');
+            const paymentCompleted = document.getElementById('payment-completed');
+            
+            if (status === 'approved' && !isPaid) {
+                // الطلب مقبول ولكن لم يتم السداد بعد
+                paymentNotRequired.classList.add('d-none');
+                paymentRequired.classList.remove('d-none');
+                paymentCompleted.classList.add('d-none');
+            } else if (status === 'paid' || isPaid) {
+                // تم السداد بنجاح
+                paymentNotRequired.classList.add('d-none');
+                paymentRequired.classList.add('d-none');
+                paymentCompleted.classList.remove('d-none');
+                document.getElementById('payment-date').textContent = new Date().toLocaleDateString('ar-SA');
+                document.getElementById('payment-method').textContent = 'بطاقة مدى';
+            } else {
+                // السداد غير مطلوب حالياً
+                paymentNotRequired.classList.remove('d-none');
+                paymentRequired.classList.add('d-none');
+                paymentCompleted.classList.add('d-none');
+            }
+            
+            // تحديث زر السداد السريع
+            const quickPaymentBtn = document.getElementById('quick-payment-btn');
+            if (status === 'approved' && !isPaid) {
+                quickPaymentBtn.classList.add('btn-primary');
+                quickPaymentBtn.classList.remove('btn-outline-primary');
+            } else {
+                quickPaymentBtn.classList.remove('btn-primary');
+                quickPaymentBtn.classList.add('btn-outline-primary');
+            }
+        }
+        
+        // تحديث البانر الأكاديمي
+        function updateAcademicBanner(status, isPaid) {
+            const bannerNotAvailable = document.getElementById('banner-not-available');
+            const bannerAvailable = document.getElementById('banner-available');
+            const quickAcademicBtn = document.getElementById('quick-academic-btn');
+            
+            if (status === 'paid' || isPaid) {
+                // البانر متاح
+                bannerNotAvailable.classList.add('d-none');
+                bannerAvailable.classList.remove('d-none');
+                
+                quickAcademicBtn.classList.add('btn-success');
+                quickAcademicBtn.classList.remove('btn-outline-success');
+            } else {
+                // البانر غير متاح
+                bannerNotAvailable.classList.remove('d-none');
+                bannerAvailable.classList.add('d-none');
+                
+                quickAcademicBtn.classList.remove('btn-success');
+                quickAcademicBtn.classList.add('btn-outline-success');
+            }
+        }
+        
+        // تحديث قائمة المستندات
+        function updateDocumentsList(application) {
+            const documentsList = document.getElementById('documents-list');
+            documentsList.innerHTML = '';
+            
+            // إضافة المستندات
+            const documents = [
+                { id: 'idCardFileName', name: 'صورة الهوية الوطنية', filename: application.idCardFileName },
+                { id: 'qualificationFileName', name: 'صورة المؤهل العلمي', filename: application.qualificationFileName },
+                { id: 'transcriptFileName', name: 'صورة السجل الأكاديمي', filename: application.transcriptFileName },
+                { id: 'photoFileName', name: 'الصورة الشخصية', filename: application.photoFileName }
+            ];
+            
+            documents.forEach(doc => {
+                if (doc.filename) {
+                    const item = document.createElement('li');
+                    item.className = 'list-group-item d-flex justify-content-between align-items-center';
+                    item.innerHTML = `
+                        <span>${doc.name}</span>
+                        <a href="#" class="btn btn-sm btn-outline-primary">
+                            <i class="fas fa-download me-1"></i> تحميل
+                        </a>
+                    `;
+                    documentsList.appendChild(item);
+                }
+            });
+            
+            // إضافة المستندات الإضافية
+            if (application.additionalFileName) {
+                const item = document.createElement('li');
+                item.className = 'list-group-item d-flex justify-content-between align-items-center';
+                item.innerHTML = `
+                    <span>مستندات إضافية</span>
+                    <a href="#" class="btn btn-sm btn-outline-primary">
+                        <i class="fas fa-download me-1"></i> تحميل
+                    </a>
+                `;
+                documentsList.appendChild(item);
+            }
+        }
+        
+        // تهيئة قائمة الإشعارات
+        function initializeNotices() {
+            const noticesList = document.getElementById('notices-list');
+            
+            // إضافة بعض الإشعارات النموذجية
+            const notices = [
+                {
+                    title: 'تذكير: سداد الرسوم الدراسية',
+                    date: '19/05/2025',
+                    content: 'يرجى سداد الرسوم الدراسية قبل تاريخ 15/06/2025 لضمان التسجيل في الفصل الدراسي.',
+                    type: 'warning'
+                },
+                {
+                    title: 'مواعيد التسجيل للفصل الدراسي القادم',
+                    date: '17/05/2025',
+                    content: 'تبدأ فترة التسجيل للفصل الدراسي الأول 1447هـ من تاريخ 01/07/2025 إلى 15/07/2025.',
+                    type: 'info'
+                },
+                {
+                    title: 'قبول طلب الالتحاق',
+                    date: '15/05/2025',
+                    content: 'تم قبول طلب الالتحاق الخاص بك في برنامج الدبلوم. يرجى استكمال إجراءات التسجيل.',
+                    type: 'success'
+                }
+            ];
+            
+            notices.forEach(notice => {
+                let badgeClass = 'bg-info';
+                if (notice.type === 'warning') badgeClass = 'bg-warning';
+                if (notice.type === 'success') badgeClass = 'bg-success';
+                
+                const item = document.createElement('li');
+                item.className = 'list-group-item';
+                item.innerHTML = `
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <h6 class="mb-0">${notice.title}</h6>
+                        <span class="badge ${badgeClass}">${notice.date}</span>
+                    </div>
+                    <p class="mb-0 small">${notice.content}</p>
+                `;
+                noticesList.appendChild(item);
+            });
+        }
+        
+        // تهيئة المستمعين للأزرار
+        function initializeEventListeners() {
+            // تسجيل الخروج
+            document.getElementById('logout-btn').addEventListener('click', function() {
+                localStorage.removeItem('currentUser');
+                window.location.href = 'index.html';
+            });
+            
+            // السداد الفوري
+            document.querySelectorAll('.payment-card .btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    // محاكاة عملية السداد
+                    simulatePayment();
+                });
+            });
+        }
+        
+        // محاكاة عملية السداد
+        function simulatePayment() {
+            // عرض نافذة تأكيد
+            if (confirm('هل أنت متأكد من رغبتك في إتمام عملية السداد؟')) {
+                // تحديث حالة الطلب إلى "مسدد"
+                const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+                const applications = getApplications();
+                const applicationIndex = applications.findIndex(app => app.nationalId === currentUser.nationalId);
+                
+                if (applicationIndex !== -1) {
+                    applications[applicationIndex].status = 'paid';
+                    applications[applicationIndex].isPaid = true;
+                    applications[applicationIndex].paymentDate = new Date().toISOString();
+                    
+                    // حفظ التغييرات
+                    localStorage.setItem('applications', JSON.stringify(applications));
+                    
+                    // تحديث الواجهة
+                    updateApplicationStatus('paid');
+                    updatePaymentStatus('paid', true);
+                    updateAcademicBanner('paid', true);
+                    
+                    // التبديل إلى قسم "تم السداد"
+                    document.getElementById('payment-tab').click();
+                    
+                    // إضافة إشعار جديد
+                    addNewNotice({
+                        title: 'تأكيد سداد الرسوم',
+                        date: new Date().toLocaleDateString('ar-SA'),
+                        content: 'تم سداد الرسوم الدراسية بنجاح. يمكنك الآن الوصول إلى النظام الأكاديمي.',
+                        type: 'success'
+                    });
+                }
+            }
+        }
+        
+        // إضافة إشعار جديد
+        function addNewNotice(notice) {
+            const noticesList = document.getElementById('notices-list');
+            let badgeClass = 'bg-info';
+            if (notice.type === 'warning') badgeClass = 'bg-warning';
+            if (notice.type === 'success') badgeClass = 'bg-success';
+            
+            const item = document.createElement('li');
+            item.className = 'list-group-item';
+            item.innerHTML = `
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <h6 class="mb-0">${notice.title}</h6>
+                    <span class="badge ${badgeClass}">${notice.date}</span>
+                </div>
+                <p class="mb-0 small">${notice.content}</p>
+            `;
+            
+            // إضافة الإشعار في بداية القائمة
+            noticesList.insertBefore(item, noticesList.firstChild);
+        }
+        
+        // تبديل التبويب
+        function switchToTab(tabId) {
+            document.getElementById(tabId).click();
+        }
+    </script>
+</body>
+</html>

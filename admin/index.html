@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-bs-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بوابة الإدارة - جامعة الملك عبدالعزيز</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+    <div id="admin-login" class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card shadow-sm">
+                    <div class="card-body text-center">
+                        <img src="../assets/kau-logo.svg" alt="شعار جامعة الملك عبدالعزيز" class="mb-4" width="100">
+                        <h2 class="mb-4">تسجيل الدخول - لوحة التحكم</h2>
+                        
+                        <div id="login-alert" class="alert alert-danger d-none" role="alert">
+                            اسم المستخدم أو كلمة المرور غير صحيحة!
+                        </div>
+                        
+                        <form id="login-form" class="text-start">
+                            <div class="mb-3">
+                                <label for="username" class="form-label">اسم المستخدم</label>
+                                <input type="text" class="form-control" id="username" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="password" class="form-label">كلمة المرور</label>
+                                <input type="password" class="form-control" id="password" required>
+                            </div>
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-primary">تسجيل الدخول</button>
+                            </div>
+                        </form>
+                        
+                        <div class="mt-3">
+                            <p class="small text-muted">للمسؤولين فقط. جميع محاولات الوصول يتم تسجيلها.</p>
+                            <a href="../index.html" class="text-decoration-none">
+                                <i class="fas fa-arrow-right me-1"></i> العودة للصفحة الرئيسية
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="admin-dashboard" class="d-none">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <div class="container-fluid">
+                <a class="navbar-brand d-flex align-items-center" href="#">
+                    <img src="../assets/kau-logo.svg" alt="شعار جامعة الملك عبدالعزيز" width="40" height="40" class="me-2">
+                    <span>لوحة تحكم جامعة الملك عبدالعزيز</span>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarAdmin" aria-controls="navbarAdmin" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarAdmin">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-tab="dashboard-tab" href="#">لوحة المعلومات</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-tab="applications-tab" href="#">طلبات القبول</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-tab="settings-tab" href="#">الإعدادات</a>
+                        </li>
+                    </ul>
+                    <div class="d-flex">
+                        <button id="logout-btn" class="btn btn-outline-light">تسجيل الخروج</button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        
+        <div class="container-fluid py-4">
+            <!-- Dashboard Tab -->
+            <div id="dashboard-tab" class="admin-tab">
+                <h2 class="mb-4">لوحة المعلومات</h2>
+                
+                <div class="row">
+                    <div class="col-md-4 mb-4">
+                        <div class="card bg-primary text-white h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">إجمالي الطلبات</h5>
+                                <p class="card-text display-4 fw-bold" id="total-applications">0</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="card bg-success text-white h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">الطلبات المقبولة</h5>
+                                <p class="card-text display-4 fw-bold" id="approved-applications">0</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="card bg-warning text-dark h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">الطلبات قيد المراجعة</h5>
+                                <p class="card-text display-4 fw-bold" id="pending-applications">0</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-6 mb-4">
+                        <div class="card h-100">
+                            <div class="card-header bg-light">
+                                <h5 class="mb-0">آخر الطلبات</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>رقم الطلب</th>
+                                                <th>الاسم</th>
+                                                <th>التاريخ</th>
+                                                <th>الحالة</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="recent-applications">
+                                            <!-- Populated via JavaScript -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <a href="#" class="btn btn-primary btn-sm" data-tab="applications-tab">عرض كل الطلبات</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 mb-4">
+                        <div class="card h-100">
+                            <div class="card-header bg-light">
+                                <h5 class="mb-0">الإحصائيات حسب البرنامج</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>البرنامج</th>
+                                                <th>العدد</th>
+                                                <th>النسبة</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="program-stats">
+                                            <!-- Populated via JavaScript -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header bg-light">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">أدوات سريعة</h5>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <button id="export-json-btn" class="btn btn-outline-primary w-100">
+                                    <i class="fas fa-download me-2"></i> تصدير البيانات (JSON)
+                                </button>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <button id="export-csv-btn" class="btn btn-outline-primary w-100">
+                                    <i class="fas fa-table me-2"></i> تصدير البيانات (CSV)
+                                </button>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <button id="print-dashboard-btn" class="btn btn-outline-secondary w-100">
+                                    <i class="fas fa-print me-2"></i> طباعة التقرير
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Applications Tab -->
+            <div id="applications-tab" class="admin-tab d-none">
+                <h2 class="mb-4">طلبات القبول</h2>
+                
+                <div class="card mb-4">
+                    <div class="card-header bg-light">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">قائمة الطلبات</h5>
+                            <div class="d-flex gap-2">
+                                <div class="input-group">
+                                    <input type="text" id="application-search" class="form-control" placeholder="بحث...">
+                                    <button class="btn btn-outline-secondary" type="button">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                </div>
+                                <select id="status-filter" class="form-select">
+                                    <option value="all">جميع الحالات</option>
+                                    <option value="pending">قيد المراجعة</option>
+                                    <option value="approved">مقبول</option>
+                                    <option value="rejected">مرفوض</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>رقم الطلب</th>
+                                        <th>الاسم</th>
+                                        <th>البرنامج</th>
+                                        <th>تاريخ التقديم</th>
+                                        <th>الحالة</th>
+                                        <th>الإجراءات</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="applications-table">
+                                    <!-- Populated via JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                        <div id="no-applications-message" class="alert alert-info d-none">
+                            لا توجد طلبات مطابقة لمعايير البحث.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Settings Tab -->
+            <div id="settings-tab" class="admin-tab d-none">
+                <h2 class="mb-4">الإعدادات</h2>
+                
+                <div class="row">
+                    <div class="col-md-6 mb-4">
+                        <div class="card">
+                            <div class="card-header bg-light">
+                                <h5 class="mb-0">تغيير بيانات المسؤول</h5>
+                            </div>
+                            <div class="card-body">
+                                <form id="admin-settings-form">
+                                    <div class="mb-3">
+                                        <label for="admin-username" class="form-label">اسم المستخدم</label>
+                                        <input type="text" class="form-control" id="admin-username" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="admin-current-password" class="form-label">كلمة المرور الحالية</label>
+                                        <input type="password" class="form-control" id="admin-current-password" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="admin-new-password" class="form-label">كلمة المرور الجديدة</label>
+                                        <input type="password" class="form-control" id="admin-new-password">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="admin-confirm-password" class="form-label">تأكيد كلمة المرور الجديدة</label>
+                                        <input type="password" class="form-control" id="admin-confirm-password">
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">حفظ التغييرات</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 mb-4">
+                        <div class="card">
+                            <div class="card-header bg-light">
+                                <h5 class="mb-0">إدارة البيانات</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <label for="import-data" class="form-label">استيراد البيانات</label>
+                                    <div class="input-group">
+                                        <input type="file" class="form-control" id="import-data" accept=".json">
+                                        <button class="btn btn-primary" type="button" id="upload-data-btn">رفع</button>
+                                    </div>
+                                    <div class="form-text">يمكنك استيراد بيانات الطلبات من ملف JSON.</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">تصدير البيانات</label>
+                                    <div class="d-grid gap-2">
+                                        <button id="settings-export-json" class="btn btn-outline-primary">
+                                            <i class="fas fa-download me-2"></i> تصدير البيانات (JSON)
+                                        </button>
+                                        <button id="settings-export-csv" class="btn btn-outline-primary">
+                                            <i class="fas fa-table me-2"></i> تصدير البيانات (CSV)
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">خيارات متقدمة</label>
+                                    <div class="d-grid">
+                                        <button id="clear-data-btn" class="btn btn-danger">
+                                            <i class="fas fa-trash me-2"></i> حذف جميع بيانات الطلبات
+                                        </button>
+                                    </div>
+                                    <div class="form-text text-danger">تحذير: سيؤدي هذا إلى حذف جميع بيانات الطلبات بشكل نهائي.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Application Details Modal -->
+    <div class="modal fade" id="applicationDetailsModal" tabindex="-1" aria-labelledby="applicationDetailsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="applicationDetailsModalLabel">تفاصيل الطلب</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="application-details-content">
+                    <!-- Populated via JavaScript -->
+                </div>
+                <div class="modal-footer" id="application-actions">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إغلاق</button>
+                    <button type="button" class="btn btn-danger" id="reject-application-btn">رفض الطلب</button>
+                    <button type="button" class="btn btn-success" id="approve-application-btn">قبول الطلب</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Confirm Action Modal -->
+    <div class="modal fade" id="confirmActionModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmActionTitle">تأكيد العملية</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="confirmActionMessage">
+                    هل أنت متأكد من أنك تريد المتابعة؟
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إلغاء</button>
+                    <button type="button" class="btn btn-primary" id="confirmActionBtn">تأكيد</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Storage.js -->
+    <script src="../js/storage.js"></script>
+    <!-- Admin JS -->
+    <script src="js/admin.js"></script>
+</body>
+</html>

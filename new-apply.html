@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-bs-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تقديم طلب القبول - جامعة الملك عبدالعزيز</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Header/Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="index.html">
+                <img src="assets/kau-logo.svg" alt="شعار جامعة الملك عبدالعزيز" width="60" height="60" class="me-2">
+                <span>جامعة الملك عبدالعزيز | بوابة القبول للدبلوم عن بعد</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">الرئيسية</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="programs.html">البرامج المتاحة</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="new-apply.html">تقديم طلب</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="application-status.html">استعلام عن طلب</a>
+                    </li>
+                    <li class="nav-item" id="login-nav-item">
+                        <a class="nav-link" href="login.html"><i class="fas fa-sign-in-alt me-1"></i>تسجيل الدخول</a>
+                    </li>
+                    <li class="nav-item d-none" id="user-nav-item">
+                        <a class="nav-link" href="student-dashboard.html"><i class="fas fa-user me-1"></i><span id="username-display"></span></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Application Form Section -->
+    <section class="form-section py-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <div class="form-card">
+                        <h2 class="text-center mb-4">نموذج طلب القبول</h2>
+                        <p class="text-center mb-4">يرجى تعبئة النموذج التالي بكافة البيانات المطلوبة</p>
+                        
+                        <div class="alert-container mb-4"></div>
+                        
+                        <!-- حالة الطلب للمستخدمين الذين سبق لهم التقديم -->
+                        <div id="application-status-section" class="d-none">
+                            <div class="alert alert-info">
+                                <h5 class="alert-heading mb-3"><i class="fas fa-info-circle me-2"></i> لديك طلب سابق</h5>
+                                <div id="application-status-details"></div>
+                                <hr>
+                                <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                                    <a href="application-status.html" class="btn btn-primary btn-sm">
+                                        <i class="fas fa-search me-1"></i> استعلام عن حالة الطلب
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <form id="applicationForm" class="needs-validation" novalidate>
+                            <!-- Program Information -->
+                            <div class="card mb-4">
+                                <div class="card-header bg-light">
+                                    <h5 class="mb-0">بيانات البرنامج</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label for="program" class="form-label required-field">البرنامج</label>
+                                            <select class="form-select" id="program" name="program" required>
+                                                <option value="" selected disabled>اختر البرنامج</option>
+                                                <option value="دبلوم إدارة الأعمال">دبلوم إدارة الأعمال</option>
+                                                <option value="دبلوم المحاسبة">دبلوم المحاسبة</option>
+                                                <option value="دبلوم التسويق">دبلوم التسويق</option>
+                                                <option value="دبلوم علوم الحاسب">دبلوم علوم الحاسب</option>
+                                                <option value="دبلوم تقنية المعلومات">دبلوم تقنية المعلومات</option>
+                                                <option value="دبلوم أمن المعلومات">دبلوم أمن المعلومات</option>
+                                            </select>
+                                            <div class="invalid-feedback">
+                                                الرجاء اختيار البرنامج
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="specialization" class="form-label">التخصص المطلوب</label>
+                                            <input type="text" class="form-control" id="specialization" name="specialization" placeholder="إذا كان البرنامج يحتوي على تخصصات فرعية">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Personal Information -->
+                            <div class="card mb-4">
+                                <div class="card-header bg-light">
+                                    <h5 class="mb-0">البيانات الشخصية</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label for="firstName" class="form-label required-field">الاسم الأول</label>
+                                            <input type="text" class="form-control" id="firstName" name="firstName" required>
+                                            <div class="invalid-feedback">
+                                                الرجاء إدخال الاسم الأول
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="lastName" class="form-label required-field">الاسم الأخير</label>
+                                            <input type="text" class="form-control" id="lastName" name="lastName" required>
+                                            <div class="invalid-feedback">
+                                                الرجاء إدخال الاسم الأخير
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label for="nationalId" class="form-label required-field">رقم الهوية الوطنية / الإقامة</label>
+                                            <input type="text" class="form-control national-id" id="nationalId" name="nationalId" required>
+                                            <div class="invalid-feedback">
+                                                الرجاء إدخال رقم الهوية بصيغة صحيحة (10 أرقام)
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="birthDate" class="form-label required-field">تاريخ الميلاد</label>
+                                            <input type="date" class="form-control birth-date" id="birthDate" name="birthDate" required>
+                                            <div class="invalid-feedback">
+                                                الرجاء إدخال تاريخ الميلاد
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label for="gender" class="form-label required-field">الجنس</label>
+                                            <select class="form-select" id="gender" name="gender" required>
+                                                <option value="" selected disabled>اختر</option>
+                                                <option value="ذكر">ذكر</option>
+                                                <option value="أنثى">أنثى</option>
+                                            </select>
+                                            <div class="invalid-feedback">
+                                                الرجاء اختيار الجنس
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="nationality" class="form-label required-field">الجنسية</label>
+                                            <input type="text" class="form-control" id="nationality" name="nationality" required>
+                                            <div class="invalid-feedback">
+                                                الرجاء إدخال الجنسية
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label for="email" class="form-label required-field">البريد الإلكتروني</label>
+                                            <input type="email" class="form-control" id="email" name="email" required>
+                                            <div class="invalid-feedback">
+                                                الرجاء إدخال بريد إلكتروني صحيح
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="phone" class="form-label required-field">رقم الجوال</label>
+                                            <input type="tel" class="form-control" id="phone" name="phone" placeholder="05xxxxxxxx" required>
+                                            <div class="invalid-feedback">
+                                                الرجاء إدخال رقم جوال صحيح (يبدأ بـ 05 متبوعاً بـ 8 أرقام)
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row">
+                                        <div class="col-md-12 mb-3">
+                                            <label for="address" class="form-label">العنوان</label>
+                                            <textarea class="form-control" id="address" name="address" rows="2"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Educational Information -->
+                            <div class="card mb-4">
+                                <div class="card-header bg-light">
+                                    <h5 class="mb-0">المؤهلات العلمية</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label for="educationLevel" class="form-label required-field">المؤهل العلمي</label>
+                                            <select class="form-select" id="educationLevel" name="educationLevel" required>
+                                                <option value="" selected disabled>اختر المؤهل</option>
+                                                <option value="ثانوية عامة">ثانوية عامة</option>
+                                                <option value="دبلوم">دبلوم</option>
+                                                <option value="بكالوريوس">بكالوريوس</option>
+                                                <option value="ماجستير">ماجستير</option>
+                                                <option value="دكتوراه">دكتوراه</option>
+                                            </select>
+                                            <div class="invalid-feedback">
+                                                الرجاء اختيار المؤهل العلمي
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="educationSpecialization" class="form-label required-field">التخصص</label>
+                                            <input type="text" class="form-control" id="educationSpecialization" name="educationSpecialization" required>
+                                            <div class="invalid-feedback">
+                                                الرجاء إدخال التخصص
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label for="institution" class="form-label required-field">جهة التخرج</label>
+                                            <input type="text" class="form-control" id="institution" name="institution" required>
+                                            <div class="invalid-feedback">
+                                                الرجاء إدخال جهة التخرج
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="graduationYear" class="form-label required-field">سنة التخرج</label>
+                                            <select class="form-select" id="graduationYear" name="graduationYear" required>
+                                                <option value="" selected disabled>اختر السنة</option>
+                                                <!-- JavaScript will populate years -->
+                                            </select>
+                                            <div class="invalid-feedback">
+                                                الرجاء اختيار سنة التخرج
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label for="gpa" class="form-label required-field">المعدل التراكمي</label>
+                                            <input type="number" class="form-control" id="gpa" name="gpa" min="0" max="5" step="0.01" required>
+                                            <div class="form-text">المعدل من 5.00 للتخصصات العلمية أو من 100 للتخصصات الأخرى</div>
+                                            <div class="invalid-feedback">
+                                                الرجاء إدخال المعدل التراكمي
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="gpaType" class="form-label required-field">نوع المعدل</label>
+                                            <select class="form-select" id="gpaType" name="gpaType" required>
+                                                <option value="" selected disabled>اختر نوع المعدل</option>
+                                                <option value="من 5">من 5</option>
+                                                <option value="من 4">من 4</option>
+                                                <option value="من 100">من 100</option>
+                                            </select>
+                                            <div class="invalid-feedback">
+                                                الرجاء اختيار نوع المعدل
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Documents Upload -->
+                            <div class="card mb-4">
+                                <div class="card-header bg-light">
+                                    <h5 class="mb-0">المستندات المطلوبة</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="alert alert-info">
+                                        <small>
+                                            <i class="fas fa-info-circle me-1"></i> يجب أن تكون المستندات بصيغة PDF أو JPG/PNG بحجم لا يتجاوز 2 ميجابايت لكل مستند.
+                                        </small>
+                                    </div>
+                                    
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label for="idCardFile" class="form-label required-field">صورة الهوية الوطنية / الإقامة</label>
+                                            <input type="file" class="form-control" id="idCardFile" name="idCardFile" accept=".pdf,.jpg,.jpeg,.png" required>
+                                            <div class="invalid-feedback">
+                                                الرجاء إرفاق صورة الهوية
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="qualificationFile" class="form-label required-field">صورة المؤهل العلمي</label>
+                                            <input type="file" class="form-control" id="qualificationFile" name="qualificationFile" accept=".pdf,.jpg,.jpeg,.png" required>
+                                            <div class="invalid-feedback">
+                                                الرجاء إرفاق صورة المؤهل العلمي
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label for="transcriptFile" class="form-label required-field">صورة السجل الأكاديمي</label>
+                                            <input type="file" class="form-control" id="transcriptFile" name="transcriptFile" accept=".pdf,.jpg,.jpeg,.png" required>
+                                            <div class="invalid-feedback">
+                                                الرجاء إرفاق صورة السجل الأكاديمي
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="photoFile" class="form-label required-field">الصورة الشخصية</label>
+                                            <input type="file" class="form-control" id="photoFile" name="photoFile" accept=".jpg,.jpeg,.png" required>
+                                            <div class="invalid-feedback">
+                                                الرجاء إرفاق الصورة الشخصية
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row">
+                                        <div class="col-md-12 mb-3">
+                                            <label for="additionalFile" class="form-label">مستندات إضافية (اختياري)</label>
+                                            <input type="file" class="form-control" id="additionalFile" name="additionalFile" accept=".pdf,.jpg,.jpeg,.png">
+                                            <div class="form-text">يمكنك إرفاق أي مستندات إضافية داعمة لطلبك مثل شهادات الخبرة أو الدورات التدريبية</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Terms and Conditions -->
+                            <div class="card mb-4">
+                                <div class="card-header bg-light">
+                                    <h5 class="mb-0">الإقرار والتعهد</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="mb-3 form-check">
+                                        <input type="checkbox" class="form-check-input" id="termsAgreement" name="termsAgreement" required>
+                                        <label class="form-check-label" for="termsAgreement">
+                                            أقر بأن جميع البيانات والمستندات المقدمة صحيحة وأتحمل مسؤولية صحتها، وأفوض الجامعة بالتحقق منها لدى الجهات المعنية.
+                                        </label>
+                                        <div class="invalid-feedback">
+                                            يجب الموافقة على هذا الإقرار للمتابعة
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="mb-3 form-check">
+                                        <input type="checkbox" class="form-check-input" id="notificationsAgreement" name="notificationsAgreement">
+                                        <label class="form-check-label" for="notificationsAgreement">
+                                            أوافق على استلام الإشعارات عبر البريد الإلكتروني ورسائل SMS.
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Submit Button -->
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-primary btn-lg">تقديم الطلب</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <h5>جامعة الملك عبدالعزيز</h5>
+                    <p>برامج الدبلوم عن بعد</p>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <h5>روابط مهمة</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="index.html" class="text-white">الرئيسية</a></li>
+                        <li><a href="programs.html" class="text-white">البرامج المتاحة</a></li>
+                        <li><a href="new-apply.html" class="text-white">تقديم طلب</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <h5>تواصل معنا</h5>
+                    <p><i class="fas fa-envelope me-2"></i> distance-learning@kau.edu.sa</p>
+                    <p><i class="fas fa-phone me-2"></i> 966-12-xxxxxxx</p>
+                    <div class="social-links mt-3">
+                        <a href="#" class="text-white me-2"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-white me-2"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-white me-2"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-white"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-3 border-top pt-3">
+                <p>© <span class="copyright-year">2023</span> جامعة الملك عبدالعزيز - جميع الحقوق محفوظة</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="js/main.js"></script>
+    <script src="js/form-validation.js"></script>
+    <script src="js/storage.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // إضافة سنوات التخرج للقائمة المنسدلة
+            const yearSelect = document.getElementById('graduationYear');
+            const currentYear = new Date().getFullYear();
+            
+            // إضافة السنوات من السنة الحالية إلى 50 سنة سابقة
+            for (let year = currentYear; year >= currentYear - 50; year--) {
+                const option = document.createElement('option');
+                option.value = year;
+                option.textContent = year;
+                yearSelect.appendChild(option);
+            }
+            
+            // التحقق من وجود طلب سابق للمستخدم الحالي
+            checkForExistingApplication();
+            
+            // تحديث عناصر تسجيل الدخول في القائمة
+            updateNavbarLoginState();
+            
+            // إضافة المستمع لنموذج التقديم
+            const applicationForm = document.getElementById('applicationForm');
+            if (applicationForm) {
+                applicationForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    // التحقق من صحة النموذج
+                    if (!applicationForm.checkValidity()) {
+                        e.stopPropagation();
+                        applicationForm.classList.add('was-validated');
+                        // تمرير إلى أول حقل غير صالح
+                        const firstInvalid = applicationForm.querySelector(':invalid');
+                        if (firstInvalid) {
+                            firstInvalid.focus();
+                            firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        }
+                        return;
+                    }
+                    
+                    applicationForm.classList.add('was-validated');
+                    
+                    // هنا تتم معالجة البيانات وتخزينها
+                    submitApplication();
+                });
+            }
+        });
+        
+        // التحقق من وجود طلب سابق
+        function checkForExistingApplication() {
+            // الحصول على المستخدم الحالي (إذا كان مسجل دخوله)
+            const currentUser = localStorage.getItem('currentUser') ? JSON.parse(localStorage.getItem('currentUser')) : null;
+            const nationalId = document.getElementById('nationalId');
+            
+            // إذا كان المستخدم مسجل دخوله، تلقائيًا ملء بياناته
+            if (currentUser) {
+                // ملء بيانات المستخدم في النموذج
+                if (document.getElementById('firstName')) document.getElementById('firstName').value = currentUser.firstName || '';
+                if (document.getElementById('lastName')) document.getElementById('lastName').value = currentUser.lastName || '';
+                if (document.getElementById('email')) document.getElementById('email').value = currentUser.email || '';
+                if (nationalId) nationalId.value = currentUser.nationalId || '';
+                
+                // التحقق من وجود طلب سابق لهذا المستخدم
+                const applications = getApplications();
+                const userApplication = applications.find(app => app.nationalId === currentUser.nationalId);
+                
+                if (userApplication) {
+                    // عرض تفاصيل الطلب السابق
+                    showExistingApplication(userApplication);
+                }
+            }
+            
+            // الاستمرار في السماح بتقديم طلب جديد حتى لو لم يكن المستخدم مسجل دخوله
+        }
+        
+        // عرض تفاصيل الطلب الموجود
+        function showExistingApplication(application) {
+            const statusSection = document.getElementById('application-status-section');
+            const statusDetails = document.getElementById('application-status-details');
+            const applicationForm = document.getElementById('applicationForm');
+            
+            // عرض قسم حالة الطلب
+            if (statusSection) statusSection.classList.remove('d-none');
+            
+            // عرض تفاصيل الطلب
+            if (statusDetails) {
+                let statusBadge = '';
+                switch(application.status) {
+                    case 'pending':
+                        statusBadge = '<span class="badge bg-warning">قيد المراجعة</span>';
+                        break;
+                    case 'approved':
+                        statusBadge = '<span class="badge bg-success">مقبول</span>';
+                        break;
+                    case 'rejected':
+                        statusBadge = '<span class="badge bg-danger">مرفوض</span>';
+                        break;
+                    default:
+                        statusBadge = '<span class="badge bg-secondary">غير معروف</span>';
+                }
+                
+                statusDetails.innerHTML = `
+                    <div class="mb-2"><strong>رقم الطلب:</strong> ${application.applicationId}</div>
+                    <div class="mb-2"><strong>البرنامج:</strong> ${application.program}</div>
+                    <div class="mb-2"><strong>تاريخ التقديم:</strong> ${new Date(application.applicationDate).toLocaleDateString('ar-SA')}</div>
+                    <div class="mb-2"><strong>حالة الطلب:</strong> ${statusBadge}</div>
+                `;
+            }
+            
+            // لا نخفي نموذج التقديم، يمكن للمستخدم تقديم طلب جديد إذا أراد
+        }
+        
+        // تقديم الطلب
+        function submitApplication() {
+            // جمع بيانات النموذج
+            const formData = new FormData(document.getElementById('applicationForm'));
+            const applicationData = {};
+            
+            for (const [key, value] of formData.entries()) {
+                // لا نقوم بتخزين الملفات، فقط أسماء الملفات للعرض فقط
+                if (key.includes('File')) {
+                    const fileInput = document.getElementById(key);
+                    if (fileInput && fileInput.files.length > 0) {
+                        applicationData[key + 'Name'] = fileInput.files[0].name;
+                    }
+                } else {
+                    applicationData[key] = value;
+                }
+            }
+            
+            // إضافة بيانات إضافية للطلب
+            applicationData.applicationId = generateApplicationId();
+            applicationData.applicationDate = new Date().toISOString();
+            applicationData.status = 'pending'; // قيد المراجعة
+            
+            // حفظ الطلب في التخزين المحلي
+            saveApplication(applicationData);
+            
+            // عرض رسالة نجاح وإعادة توجيه المستخدم
+            alert('تم تقديم طلبك بنجاح! سيتم توجيهك إلى صفحة تأكيد الطلب.');
+            window.location.href = 'confirmation.html?id=' + applicationData.applicationId;
+        }
+        
+        // تحديث حالة تسجيل الدخول في شريط التنقل
+        function updateNavbarLoginState() {
+            const loginNavItem = document.getElementById('login-nav-item');
+            const userNavItem = document.getElementById('user-nav-item');
+            const usernameDisplay = document.getElementById('username-display');
+            
+            // التحقق من وجود مستخدم مسجل
+            const currentUser = localStorage.getItem('currentUser') ? JSON.parse(localStorage.getItem('currentUser')) : null;
+            
+            if (currentUser) {
+                // المستخدم مسجل دخوله
+                loginNavItem.classList.add('d-none');
+                userNavItem.classList.remove('d-none');
+                usernameDisplay.textContent = `${currentUser.firstName || ''} ${currentUser.lastName || ''}`;
+            } else {
+                // المستخدم غير مسجل
+                loginNavItem.classList.remove('d-none');
+                userNavItem.classList.add('d-none');
+            }
+        }
+    </script>
+</body>
+</html>

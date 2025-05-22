@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-bs-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>طلباتي - جامعة الملك عبدالعزيز</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Header/Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="index.html">
+                <img src="assets/kau-logo.svg" alt="شعار جامعة الملك عبدالعزيز" width="60" height="60" class="me-2">
+                <span>جامعة الملك عبدالعزيز | بوابة القبول للدبلوم عن بعد</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">الرئيسية</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="programs.html">البرامج المتاحة</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="apply.html">تقديم طلب</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Applications Section -->
+    <section class="py-5">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2>طلباتي</h2>
+                <a href="apply.html" class="btn btn-primary">
+                    <i class="fas fa-plus-circle me-1"></i> تقديم طلب جديد
+                </a>
+            </div>
+            
+            <!-- Application Status Check -->
+            <div class="card mb-4">
+                <div class="card-header bg-light">
+                    <h5 class="mb-0">استعلام عن حالة طلب</h5>
+                </div>
+                <div class="card-body">
+                    <form id="applicationStatusForm" class="row g-3">
+                        <div class="col-md-6">
+                            <label for="applicationId" class="form-label">رقم الطلب</label>
+                            <input type="text" class="form-control" id="applicationId" placeholder="مثال: KAU-20250101-1234" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="nationalIdCheck" class="form-label">رقم الهوية الوطنية</label>
+                            <input type="text" class="form-control national-id" id="nationalIdCheck" placeholder="أدخل رقم الهوية المرتبط بالطلب" required>
+                        </div>
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-search me-1"></i> استعلام
+                            </button>
+                        </div>
+                    </form>
+                    
+                    <div id="statusResult" class="mt-3 d-none">
+                        <!-- Results will be displayed here -->
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Applications List -->
+            <div class="card">
+                <div class="card-header bg-light">
+                    <h5 class="mb-0">قائمة طلباتي</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>رقم الطلب</th>
+                                    <th>البرنامج</th>
+                                    <th>تاريخ التقديم</th>
+                                    <th>آخر تحديث</th>
+                                    <th>الحالة</th>
+                                    <th>الإجراءات</th>
+                                </tr>
+                            </thead>
+                            <tbody id="applicationsTable">
+                                <!-- Applications will be populated here -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="noApplicationsMessage" class="alert alert-info d-none">
+                        لا توجد طلبات مسجلة بعد. <a href="apply.html" class="alert-link">تقديم طلب جديد</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Application Details Modal -->
+    <div class="modal fade" id="applicationDetailsModal" tabindex="-1" aria-labelledby="applicationDetailsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="applicationDetailsModalLabel">تفاصيل الطلب</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="applicationDetailsContent">
+                    <!-- Application details will be populated here -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إغلاق</button>
+                    <button type="button" class="btn btn-primary" id="printApplicationBtn">
+                        <i class="fas fa-print me-1"></i> طباعة
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <h5>جامعة الملك عبدالعزيز</h5>
+                    <p>برامج الدبلوم عن بعد</p>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <h5>روابط مهمة</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="index.html" class="text-white">الرئيسية</a></li>
+                        <li><a href="programs.html" class="text-white">البرامج المتاحة</a></li>
+                        <li><a href="apply.html" class="text-white">تقديم طلب</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <h5>تواصل معنا</h5>
+                    <p><i class="fas fa-envelope me-2"></i> distance-learning@kau.edu.sa</p>
+                    <p><i class="fas fa-phone me-2"></i> 966-12-xxxxxxx</p>
+                    <div class="social-links mt-3">
+                        <a href="#" class="text-white me-2"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-white me-2"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-white me-2"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-white"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-3 border-top pt-3">
+                <p>© <span class="copyright-year">2023</span> جامعة الملك عبدالعزيز - جميع الحقوق محفوظة</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="js/storage.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/form-validation.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/applications.js"></script>
+</body>
+</html>
